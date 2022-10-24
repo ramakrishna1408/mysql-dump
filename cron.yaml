@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: my-sql-dumb-job
+spec:
+  #schedule the time required here
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: my-sql-dumb-container
+            image: my-sql-dumb
+            imagePullPolicy: IfNotPresent
+            envFrom:
+            - secretRef:
+                name: my-sql-dumb-secret
+          restartPolicy: OnFailure
